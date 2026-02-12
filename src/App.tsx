@@ -1,54 +1,22 @@
-import React from 'react';
-import { AuthProvider, useAuth } from './context/AuthContext';
-import { AuthForm } from './components/AuthForm';
-import { Game3D } from './components/Game3D';
-import { CharacterCustomization } from './components/CharacterCustomization';
-import { Character } from './types';
+import Navbar from './components/Navbar';
+import Hero from './components/Hero';
+import About from './components/About';
+import Projects from './components/Projects';
+import Contact from './components/Contact';
 
-const AppContent: React.FC = () => {
-  const { isAuthenticated, isLoading, isNewPlayer, user, updateCharacter, completeCustomization } = useAuth();
-
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-green-900 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-16 h-16 border-4 border-white border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-white text-xl">Loading...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!isAuthenticated) {
-    return <AuthForm />;
-  }
-
-  // Show character customization for new players
-  if (isNewPlayer && user) {
-    const handleSaveCharacter = async (character: Character) => {
-      await updateCharacter(character);
-      completeCustomization();
-    };
-
-    return (
-      <CharacterCustomization
-        initialCharacter={user.character}
-        onSave={handleSaveCharacter}
-        onSkip={completeCustomization}
-        isNewPlayer={true}
-      />
-    );
-  }
-
-  return <Game3D />;
-};
-
-const App: React.FC = () => {
+function App() {
   return (
-    <AuthProvider>
-      <AppContent />
-    </AuthProvider>
+    <div className="min-h-screen bg-gray-950 text-white overflow-x-hidden">
+      <Navbar />
+      <Hero />
+      <About />
+      <Projects />
+      <Contact />
+      <footer className="py-8 text-center text-gray-500 text-sm border-t border-gray-800/50">
+        <p>&copy; {new Date().getFullYear()} Christos Diamantakis. All rights reserved.</p>
+      </footer>
+    </div>
   );
-};
+}
 
 export default App;
