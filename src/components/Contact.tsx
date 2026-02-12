@@ -16,12 +16,34 @@ function useInView(threshold = 0.2) {
 
 export default function Contact() {
   const { ref, visible } = useInView();
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 3000);
+    setStatus('sending');
+
+    const form = e.currentTarget;
+    const data = new FormData(form);
+
+    try {
+      const res = await fetch('https://formsubmit.co/ajax/ch.diamantakis@gmail.com', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: data,
+      });
+
+      if (res.ok) {
+        setStatus('sent');
+        form.reset();
+        setTimeout(() => setStatus('idle'), 4000);
+      } else {
+        setStatus('error');
+        setTimeout(() => setStatus('idle'), 4000);
+      }
+    } catch {
+      setStatus('error');
+      setTimeout(() => setStatus('idle'), 4000);
+    }
   };
 
   return (
@@ -91,12 +113,15 @@ export default function Contact() {
 
           {/* Contact form */}
           <form onSubmit={handleSubmit} className="space-y-6">
+            <input type="hidden" name="_subject" value="New message from portfolio" />
+            <input type="hidden" name="_template" value="table" />
             <div>
               <label htmlFor="name" className="block text-sm font-medium text-gray-400 mb-2">
                 Name
               </label>
               <input
                 id="name"
+                name="name"
                 type="text"
                 required
                 className="w-full px-4 py-3 rounded-xl bg-gray-900/60 border border-gray-800 text-white placeholder-gray-600 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/25 transition-all"
@@ -109,6 +134,7 @@ export default function Contact() {
               </label>
               <input
                 id="email"
+                name="email"
                 type="email"
                 required
                 className="w-full px-4 py-3 rounded-xl bg-gray-900/60 border border-gray-800 text-white placeholder-gray-600 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/25 transition-all"
@@ -121,6 +147,7 @@ export default function Contact() {
               </label>
               <textarea
                 id="message"
+                name="message"
                 required
                 rows={5}
                 className="w-full px-4 py-3 rounded-xl bg-gray-900/60 border border-gray-800 text-white placeholder-gray-600 focus:outline-none focus:border-purple-500/50 focus:ring-1 focus:ring-purple-500/25 transition-all resize-none"
@@ -129,10 +156,15 @@ export default function Contact() {
             </div>
             <button
               type="submit"
-              className="w-full py-4 rounded-xl font-semibold bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 hover:shadow-lg hover:shadow-purple-500/25 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-2"
+              disabled={status === 'sending'}
+              className="w-full py-4 rounded-xl font-semibold bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 hover:shadow-lg hover:shadow-purple-500/25 hover:scale-[1.02] active:scale-[0.98] transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-60 disabled:cursor-not-allowed disabled:hover:scale-100"
             >
-              {submitted ? (
+              {status === 'sending' ? (
+                'Sending...'
+              ) : status === 'sent' ? (
                 'Message Sent!'
+              ) : status === 'error' ? (
+                'Failed — try again'
               ) : (
                 <>
                   Send Message <Send size={18} />

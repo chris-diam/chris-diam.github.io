@@ -6,6 +6,7 @@ interface Project {
   description: string;
   tags: string[];
   gradient: string;
+  image?: string;
   github?: string;
   live?: string;
 }
@@ -17,6 +18,8 @@ const projects: Project[] = [
       'Built GUIs with React.js and React Native for user registration, Keycloak SSO authorization, transaction management, and member administration for an EU research consortium.',
     tags: ['React', 'React Native', 'Keycloak', 'Node.js'],
     gradient: 'from-orange-500 to-pink-600',
+    image: 'https://fever-h2020.eu/data/screenshot_2024-01-12_095510_1110px.png',
+    live: 'https://fever-h2020.eu/',
   },
   {
     title: 'IDEA4RC',
@@ -24,6 +27,8 @@ const projects: Project[] = [
       'Full-stack platform for rare cancer patients to register, securely log in via Keycloak SSO, complete medical questionnaires, and consent to data donation. Built both the React UI and Node.js backend.',
     tags: ['React', 'Node.js', 'Keycloak', 'TypeScript'],
     gradient: 'from-violet-600 to-indigo-600',
+    image: 'https://www.idea4rc.eu/wp-content/uploads/2023/03/LogoIDEA4RC-1024x683.jpg',
+    live: 'https://www.idea4rc.eu/',
   },
   {
     title: 'ODIN',
@@ -31,6 +36,8 @@ const projects: Project[] = [
       'Administration platform for monitoring and managing hospital IoT resources, with real-time patient data visualization powered by D3.js.',
     tags: ['React', 'D3.js', 'IoT', 'Dashboard'],
     gradient: 'from-cyan-500 to-blue-600',
+    image: 'https://odin-smarthospitals.eu/wp-content/uploads/2022/01/the-future-of-health.png',
+    live: 'https://odin-smarthospitals.eu/',
   },
   {
     title: 'Ear Trainer',
@@ -65,9 +72,16 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
       style={{ transitionDelay: `${index * 150}ms` }}
     >
       <div className="h-full rounded-2xl bg-gray-900/50 border border-gray-800/50 overflow-hidden hover:border-gray-700/80 hover:shadow-2xl hover:shadow-purple-500/5 transition-all duration-300">
-        {/* Gradient header */}
-        <div className={`h-48 bg-gradient-to-br ${project.gradient} relative overflow-hidden`}>
-          <div className="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors duration-300" />
+        {/* Card header with image or gradient */}
+        <div className={`h-52 bg-gradient-to-br ${project.gradient} relative overflow-hidden`}>
+          {project.image && (
+            <img
+              src={project.image}
+              alt={project.title}
+              className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+            />
+          )}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
           <div className="absolute bottom-4 left-6 right-6">
             <h3 className="text-2xl font-bold text-white drop-shadow-lg">{project.title}</h3>
           </div>
@@ -105,7 +119,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors"
               >
-                <ExternalLink size={16} /> Live Demo
+                <ExternalLink size={16} /> Website
               </a>
             )}
           </div>
