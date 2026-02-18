@@ -25,13 +25,13 @@ export default function Hero() {
         </div>
 
         <h1
-          className="text-5xl sm:text-6xl md:text-8xl font-black leading-tight mb-8 animate-fade-up"
+          className="text-5xl sm:text-6xl md:text-8xl font-black leading-tight mb-8 animate-fade-up silver-chars"
           style={{ animationDelay: '0.3s', opacity: 0 }}
         >
-          Hi, I'm{' '}
-          <span className="gradient-text">
-            Christos
-          </span>
+          <span>H</span><span>i</span><span>,</span><span>{'\u00A0'}</span><span>I</span><span>'</span><span>m</span><span>{'\u00A0'}</span>
+          {'Christos'.split('').map((char, i) => (
+            <span key={i} className="gradient-text" style={{ display: 'inline-block' }}>{char}</span>
+          ))}
         </h1>
 
         <p

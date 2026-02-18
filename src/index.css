@@ -46,22 +46,63 @@ body {
     -webkit-mask-composite: xor;
     mask-composite: exclude;
   }
-
-  .silver-text {
-    color: #C0C0C0;
-    text-shadow: 0 0 1px rgba(192, 192, 192, 0.3);
-    transition: all 0.4s ease;
-    position: relative;
-  }
-
-  .silver-text:hover {
-    color: #FFFFFF;
-    text-shadow:
-      0 0 8px rgba(255, 255, 255, 0.6),
-      0 0 20px rgba(168, 85, 247, 0.4),
-      0 0 40px rgba(236, 72, 153, 0.2);
-  }
 }
+
+/* ── Silver text with neon glow ── */
+.silver-text {
+  color: hsl(0, 0%, 45%);
+  cursor: pointer;
+  transition: color 0.5s ease-out, text-shadow 0.5s ease-out, letter-spacing 0.5s ease-out;
+}
+
+.silver-text:hover {
+  color: #fff;
+  letter-spacing: 1px;
+  text-shadow:
+    0 0 10px #fff,
+    0 0 20px #fff,
+    0 0 40px #fff,
+    0 0 80px rgba(168, 85, 247, 0.4);
+}
+
+/* Per-character silver glow (for span-wrapped letters) */
+.silver-chars span {
+  display: inline-block;
+  color: hsl(0, 0%, 45%);
+  transition: 0.5s ease-out;
+}
+
+.silver-chars:hover span {
+  color: #fff;
+  text-shadow:
+    0 0 10px #fff,
+    0 0 20px #fff,
+    0 0 40px #fff,
+    0 0 80px rgba(168, 85, 247, 0.5);
+}
+
+/* Stagger individual letter transitions */
+.silver-chars:hover span:nth-child(1) { transition-delay: 0.00s; }
+.silver-chars:hover span:nth-child(2) { transition-delay: 0.03s; }
+.silver-chars:hover span:nth-child(3) { transition-delay: 0.06s; }
+.silver-chars:hover span:nth-child(4) { transition-delay: 0.09s; }
+.silver-chars:hover span:nth-child(5) { transition-delay: 0.12s; }
+.silver-chars:hover span:nth-child(6) { transition-delay: 0.15s; }
+.silver-chars:hover span:nth-child(7) { transition-delay: 0.18s; }
+.silver-chars:hover span:nth-child(8) { transition-delay: 0.21s; }
+.silver-chars:hover span:nth-child(9) { transition-delay: 0.24s; }
+.silver-chars:hover span:nth-child(10) { transition-delay: 0.27s; }
+.silver-chars:hover span:nth-child(11) { transition-delay: 0.30s; }
+.silver-chars:hover span:nth-child(12) { transition-delay: 0.33s; }
+.silver-chars:hover span:nth-child(13) { transition-delay: 0.36s; }
+.silver-chars:hover span:nth-child(14) { transition-delay: 0.39s; }
+.silver-chars:hover span:nth-child(15) { transition-delay: 0.42s; }
+.silver-chars:hover span:nth-child(16) { transition-delay: 0.45s; }
+.silver-chars:hover span:nth-child(17) { transition-delay: 0.48s; }
+.silver-chars:hover span:nth-child(18) { transition-delay: 0.51s; }
+.silver-chars:hover span:nth-child(19) { transition-delay: 0.54s; }
+.silver-chars:hover span:nth-child(20) { transition-delay: 0.57s; }
+.silver-chars:hover span:nth-child(21) { transition-delay: 0.60s; }
 
 @keyframes gradient-shift {
   0% { background-position: 0% 50%; }

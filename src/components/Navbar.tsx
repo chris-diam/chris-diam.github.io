@@ -7,6 +7,17 @@ const links = [
   { label: 'Contact', href: '#contact' },
 ];
 
+function SilverName() {
+  const text = 'Christos Diamantakis';
+  return (
+    <a href="#" className="text-xl font-bold silver-chars font-mono tracking-wider">
+      {text.split('').map((char, i) => (
+        <span key={i}>{char === ' ' ? '\u00A0' : char}</span>
+      ))}
+    </a>
+  );
+}
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -26,9 +37,7 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
-        <a href="#" className="text-xl font-bold silver-text">
-          Christos Diamantakis
-        </a>
+        <SilverName />
 
         {/* Desktop */}
         <div className="hidden md:flex items-center gap-8">
