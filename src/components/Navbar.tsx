@@ -50,12 +50,6 @@ export default function Navbar() {
               {link.label}
             </a>
           ))}
-          <a
-            href="#contact"
-            className="px-5 py-2.5 rounded-full text-sm font-semibold bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 hover:shadow-lg hover:shadow-purple-500/25 transition-all duration-300 text-white"
-          >
-            Let's Talk
-          </a>
         </div>
 
         {/* Mobile toggle */}
@@ -81,13 +75,6 @@ export default function Navbar() {
                 {link.label}
               </a>
             ))}
-            <a
-              href="#contact"
-              onClick={() => setOpen(false)}
-              className="mt-2 px-5 py-3 rounded-full text-center font-semibold bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 text-white"
-            >
-              Let's Talk
-            </a>
           </div>
         </div>
       )}

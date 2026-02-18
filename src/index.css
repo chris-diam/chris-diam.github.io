@@ -50,35 +50,33 @@ body {
 
 /* ── Silver text with neon glow ── */
 .silver-text {
-  color: hsl(0, 0%, 45%);
+  color: hsl(0, 0%, 28%);
   cursor: pointer;
   transition: color 0.5s ease-out, text-shadow 0.5s ease-out, letter-spacing 0.5s ease-out;
 }
 
 .silver-text:hover {
-  color: #fff;
+  color: hsl(0, 0%, 80%);
   letter-spacing: 1px;
   text-shadow:
-    0 0 10px #fff,
-    0 0 20px #fff,
-    0 0 40px #fff,
-    0 0 80px rgba(168, 85, 247, 0.4);
+    0 0 7px rgba(255, 255, 255, 0.4),
+    0 0 20px rgba(255, 255, 255, 0.15),
+    0 0 40px rgba(168, 85, 247, 0.1);
 }
 
 /* Per-character silver glow (for span-wrapped letters) */
 .silver-chars span {
   display: inline-block;
-  color: hsl(0, 0%, 45%);
+  color: hsl(0, 0%, 28%);
   transition: 0.5s ease-out;
 }
 
 .silver-chars:hover span {
-  color: #fff;
+  color: hsl(0, 0%, 80%);
   text-shadow:
-    0 0 10px #fff,
-    0 0 20px #fff,
-    0 0 40px #fff,
-    0 0 80px rgba(168, 85, 247, 0.5);
+    0 0 7px rgba(255, 255, 255, 0.4),
+    0 0 20px rgba(255, 255, 255, 0.15),
+    0 0 40px rgba(168, 85, 247, 0.1);
 }
 
 /* Stagger individual letter transitions */
