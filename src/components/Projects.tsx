@@ -9,9 +9,11 @@ interface Project {
   image?: string;
   github?: string;
   live?: string;
+  category: 'professional' | 'personal';
 }
 
 const projects: Project[] = [
+  // ── Professional ──
   {
     title: 'FEVER',
     description:
@@ -20,6 +22,7 @@ const projects: Project[] = [
     gradient: 'from-orange-500 to-pink-600',
     image: 'https://fever-h2020.eu/data/screenshot_2024-01-12_095510_1110px.png',
     live: 'https://fever-h2020.eu/',
+    category: 'professional',
   },
   {
     title: 'IDEA4RC',
@@ -29,6 +32,7 @@ const projects: Project[] = [
     gradient: 'from-violet-600 to-indigo-600',
     image: 'https://www.idea4rc.eu/wp-content/uploads/2023/03/LogoIDEA4RC-1024x683.jpg',
     live: 'https://www.idea4rc.eu/',
+    category: 'professional',
   },
   {
     title: 'ODIN',
@@ -38,6 +42,36 @@ const projects: Project[] = [
     gradient: 'from-cyan-500 to-blue-600',
     image: 'https://odin-smarthospitals.eu/wp-content/uploads/2022/01/the-future-of-health.png',
     live: 'https://odin-smarthospitals.eu/',
+    category: 'professional',
+  },
+  {
+    title: 'ENACT',
+    description:
+      'Set up Sovity EDC connectors (provider/consumer) and built a unified UI for managing assets, policies & contracts. Integrated MinIO object storage for data exchange across the cognitive computing continuum.',
+    tags: ['React', 'EDC Connectors', 'MinIO', 'Data Spaces'],
+    gradient: 'from-sky-500 to-indigo-600',
+    image: 'https://enact-horizon.eu/wp-content/uploads/2024/02/Foto-Header.jpg',
+    live: 'https://enact-horizon.eu/',
+    category: 'professional',
+  },
+  // ── Personal ──
+  {
+    title: 'Sidirou Erga',
+    description:
+      'Full e-commerce website for a metalwork business, featuring product catalog, responsive design, and modern UI built with React and Tailwind CSS.',
+    tags: ['React', 'Tailwind CSS', 'E-commerce'],
+    gradient: 'from-amber-500 to-orange-600',
+    github: 'https://github.com/chris-diam/sidirou-erga',
+    category: 'personal',
+  },
+  {
+    title: 'Tresse',
+    description:
+      'Full-stack application with a React frontend and Node.js/Express backend, featuring user authentication, data management, and a clean modern interface.',
+    tags: ['React', 'Node.js', 'Express', 'Full Stack'],
+    gradient: 'from-rose-500 to-pink-600',
+    github: 'https://github.com/chris-diam/tresse-ui',
+    category: 'personal',
   },
   {
     title: 'Ear Trainer',
@@ -46,6 +80,43 @@ const projects: Project[] = [
     tags: ['React Native', 'Expo', 'TypeScript', 'Audio API'],
     gradient: 'from-emerald-500 to-teal-600',
     github: 'https://github.com/chris-diam/EarTrainer',
+    category: 'personal',
+  },
+  {
+    title: 'SafeLogic',
+    description:
+      'Mobile safety inspection app for technical advisors in Greece. Features company management, checklist inspections, PDF report generation, and scheduling with notifications.',
+    tags: ['React Native', 'Expo', 'AsyncStorage', 'PDF'],
+    gradient: 'from-teal-500 to-cyan-600',
+    github: 'https://github.com/chris-diam/levity-checklist',
+    category: 'personal',
+  },
+  {
+    title: 'Chat App',
+    description:
+      'Real-time chat application built with Node.js, Express, and Socket.io. Features instant messaging, room-based conversations, and live user presence.',
+    tags: ['Node.js', 'Socket.io', 'Express', 'Real-time'],
+    gradient: 'from-blue-500 to-violet-600',
+    github: 'https://github.com/chris-diam/Chat-App',
+    category: 'personal',
+  },
+  {
+    title: 'Weather App',
+    description:
+      'Clean weather application that fetches real-time data from a weather API, displaying current conditions, forecasts, and location-based results.',
+    tags: ['JavaScript', 'API', 'CSS', 'Responsive'],
+    gradient: 'from-sky-400 to-blue-500',
+    github: 'https://github.com/chris-diam/Weather-App',
+    category: 'personal',
+  },
+  {
+    title: 'Connector API',
+    description:
+      'Backend API service for managing and orchestrating data connectors, built with Node.js and designed for integration with external data sources.',
+    tags: ['Node.js', 'REST API', 'Connectors'],
+    gradient: 'from-purple-500 to-fuchsia-600',
+    github: 'https://github.com/chris-diam/connector-api',
+    category: 'personal',
   },
 ];
 
@@ -129,8 +200,21 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
   );
 }
 
+type Filter = 'all' | 'professional' | 'personal';
+
 export default function Projects() {
   const { ref, visible } = useInView();
+  const [filter, setFilter] = useState<Filter>('all');
+
+  const filtered = filter === 'all'
+    ? projects
+    : projects.filter((p) => p.category === filter);
+
+  const tabs: { label: string; value: Filter }[] = [
+    { label: 'All', value: 'all' },
+    { label: 'Professional', value: 'professional' },
+    { label: 'Personal', value: 'personal' },
+  ];
 
   return (
     <section id="projects" className="py-32 px-6">
@@ -141,13 +225,30 @@ export default function Projects() {
             Things I've{' '}
             <span className="gradient-text">built</span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mb-16">
+          <p className="text-gray-400 text-lg max-w-2xl mb-10">
             A selection of projects that showcase my skills and passion for building great software.
           </p>
+
+          {/* Filter tabs */}
+          <div className="flex gap-2 mb-12">
+            {tabs.map((tab) => (
+              <button
+                key={tab.value}
+                onClick={() => setFilter(tab.value)}
+                className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-300 ${
+                  filter === tab.value
+                    ? 'bg-gradient-to-r from-orange-500 via-pink-500 to-purple-600 text-white shadow-lg shadow-purple-500/20'
+                    : 'bg-gray-800/60 text-gray-400 border border-gray-700/50 hover:border-gray-600 hover:text-gray-300'
+                }`}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {projects.map((project, i) => (
+          {filtered.map((project, i) => (
             <ProjectCard key={project.title} project={project} index={i} />
           ))}
         </div>
